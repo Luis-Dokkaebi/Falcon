@@ -143,7 +143,7 @@
             <h2 class="section-title text-center" data-aos="fade-up">Our Services</h2>
             
             <div class="services-grid">
-                <div class="service-card" data-aos="fade-up">
+                <div class="service-card" data-aos="fade-up" style="--bg-image: url('images/final_mechanical.jpg');">
                     <div class="service-image">
                         <img src="./images/mechanical.png" alt="Mechanical Services">
                     </div>
@@ -154,7 +154,7 @@
                     </div>
                 </div>
                 
-                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100" style="--bg-image: url('images/welding_hero.jpg');">
                     <div class="service-image">
                         <img src="./images/welding.png" alt="Specialty Welding">
                     </div>
@@ -165,7 +165,7 @@
                     </div>
                 </div>
                 
-                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200" style="--bg-image: url('images/hero-banner-2.jpg');">
                     <div class="service-image">
                         <img src="./images/fabricationimg.png" alt="Fabrication Services">
                     </div>
@@ -176,7 +176,7 @@
                     </div>
                 </div>
                 
-                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300" style="--bg-image: url('images/torque_final.jpg');">
                     <div class="service-image">
                         <img src="./images/torque.png" alt="Controlled Services">
                     </div>
@@ -344,10 +344,16 @@
         document.querySelectorAll('.tab-link').forEach(button => {
             button.addEventListener('click', () => {
                 document.querySelectorAll('.tab-link').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                    content.style.animation = 'none'; /* Reset animation */
+                    content.offsetHeight; /* Trigger reflow */
+                });
                 
                 button.classList.add('active');
-                document.getElementById(button.getAttribute('data-tab')).classList.add('active');
+                const activeContent = document.getElementById(button.getAttribute('data-tab'));
+                activeContent.classList.add('active');
+                activeContent.style.animation = 'fadeInUp 0.5s ease forwards';
             });
         });
     </script>
