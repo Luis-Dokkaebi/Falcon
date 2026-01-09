@@ -273,20 +273,13 @@ header.scrolled {
 }
 
 .logo-img {
-    height: 50px;
+    height: auto;
+    max-height: 65px;
+    max-width: 50vw; /* Prevent logo from crowding navigation on smaller screens */
     transition: var(--transition);
 }
 
-.logo-text {
-    font-weight: 800;
-    font-size: 1.5rem;
-    margin-left: 10px;
-    color: var(--primary-black);
-}
-
-.logo-text span {
-    color: var(--primary-red);
-}
+/* Logo text styles removed as we now use a full image logo */
 
 .nav-menu {
     display: flex;
@@ -1043,8 +1036,10 @@ footer {
     .hero h1 { font-size: 1.6rem; }
     .container { padding: 0 15px; }
     .section-title { font-size: 1.5rem; }
-    .logo-img { height: 40px; }
-    .logo-text { font-size: 1.2rem; }
+    .logo-img {
+        max-height: 45px;
+        max-width: 180px; /* Ensure it fits with hamburger menu */
+    }
 }
 
 /* Floating Logo (Idea 4/Custom) */
