@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 duration: 800,
                 easing: 'easeOutExpo',
                 complete: function() {
-                    document.querySelector('#preloader').style.display = 'none';
+                    const preloader = document.querySelector('#preloader');
+                    if (preloader) preloader.style.display = 'none';
                     // Trigger Hero Animations after preloader is done
                     animateHero();
                 }
@@ -215,17 +216,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 content.classList.remove('active');
             });
 
-            targetContent.style.display = 'block';
-            targetContent.classList.add('active');
+            if (targetContent) {
+                targetContent.style.display = 'block';
+                targetContent.classList.add('active');
 
-            // Elastic Entrance
-            anime({
-                targets: targetContent,
-                opacity: [0, 1],
-                translateX: [20, 0],
-                duration: 800,
-                easing: 'easeOutElastic(1, .6)'
-            });
+                // Elastic Entrance
+                anime({
+                    targets: targetContent,
+                    opacity: [0, 1],
+                    translateX: [20, 0],
+                    duration: 800,
+                    easing: 'easeOutElastic(1, .6)'
+                });
+            }
         });
     });
 
@@ -237,21 +240,66 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (entry.isIntersecting) {
                     const counters = document.querySelectorAll('.stat-number');
                     counters.forEach(counter => {
-                        const targetValue = parseInt(counter.getAttribute('data-target'));
-                        // Check if it has a + or %
                         const originalText = counter.innerText;
-                        const suffix = originalText.includes('%') ? '%' : (originalText.includes('+') ? '+' : '');
+                        let targetValue = parseInt(counter.getAttribute('data-target'));
+                        let suffix = '';
+                        let prefix = '';
 
-                        anime({
-                            targets: counter,
-                            innerHTML: [0, targetValue],
-                            round: 1, // No decimals
+                        // If data-target is missing or invalid, parse from text
+                        if (isNaN(targetValue)) {
+                            // Regex to find the number.
+                            // Matches: optional prefix (non-digits), number (digits with optional decimal), any suffix (even with digits like /7)
+                            const match = originalText.match(/^(\D*)(\d+(?:\.\d+)?)(.*)$/);
+                            if (match) {
+                                prefix = match[1];
+                                targetValue = parseFloat(match[2]);
+                                suffix = match[3];
+                            } else {
+                                // Fallback: try to just parse float
+                                targetValue = parseFloat(originalText);
+                                if (!isNaN(targetValue)) {
+                                    suffix = originalText.replace(targetValue.toString(), '').trim();
+                                }
+                            }
+                        } else {
+                            // If data-target exists, preserve suffix/prefix
+                            const match = originalText.match(/^(\D*)(\d+(?:\.\d+)?)(.*)$/);
+                            if (match) {
+                                prefix = match[1];
+                                suffix = match[3];
+                            } else {
+                                suffix = originalText.includes('%') ? '%' : (originalText.includes('+') ? '+' : '');
+                            }
+                        }
+
+                        if (isNaN(targetValue)) return;
+
+                        // Use a dummy object to animate the value
+                        let dummy = { val: 0 };
+                        // Determine decimal places for rounding
+                        const isFloat = !Number.isInteger(targetValue);
+
+                        let animeConfig = {
+                            targets: dummy,
+                            val: targetValue,
                             easing: 'easeOutExpo',
                             duration: 2000,
-                            update: function(anim) {
-                                counter.innerHTML = anim.animations[0].currentValue.toFixed(0) + suffix;
+                            update: function() {
+                                // For floats, we might need to fix precision to avoid floating point errors
+                                let displayVal = dummy.val;
+                                if (isFloat) {
+                                    displayVal = parseFloat(dummy.val.toFixed(1));
+                                }
+                                counter.innerHTML = prefix + displayVal + suffix;
                             }
-                        });
+                        };
+
+                        // Only apply rounding for integers
+                        if (!isFloat) {
+                            animeConfig.round = 1;
+                        }
+
+                        anime(animeConfig);
                     });
                     statsObserver.unobserve(entry.target);
                 }
