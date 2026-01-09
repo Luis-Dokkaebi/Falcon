@@ -459,4 +459,44 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // 14. CERTIFICATES ANIMATION (Fabrication Page)
+    const certsContainer = document.querySelector('.certs-container');
+    if (certsContainer) {
+        const certsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Stagger Entrance
+                    anime({
+                        targets: '.anime-cert',
+                        opacity: [0, 1],
+                        translateY: [50, 0],
+                        scale: [0.8, 1],
+                        rotate: {
+                            value: [-5, 0], // Slight rotation for effect
+                            duration: 1000
+                        },
+                        delay: anime.stagger(200),
+                        duration: 1200,
+                        easing: 'easeOutElastic(1, .8)',
+                        complete: function() {
+                             // Continuous Floating Effect after entrance
+                             anime({
+                                targets: '.anime-cert img',
+                                translateY: [-5, 5],
+                                direction: 'alternate',
+                                loop: true,
+                                duration: 2000,
+                                easing: 'easeInOutSine',
+                                delay: anime.stagger(300) // Stagger the float too
+                             });
+                        }
+                    });
+                    certsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        certsObserver.observe(certsContainer);
+    }
 });
