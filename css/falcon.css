@@ -87,16 +87,25 @@ ul {
     padding: 80px 0;
 }
 
+/* Updated Section Title for Line Animation */
 .section-title {
     position: relative;
     margin-bottom: 50px;
     text-align: center;
+    display: inline-block; /* Crucial for width calculation */
+    /* Center in container */
+    left: 50%;
+    transform: translateX(-50%);
 }
 
+/* Replace ::after with real element .title-line */
 .section-title:after {
-    content: '';
+    display: none;
+}
+
+.title-line {
     display: block;
-    width: 80px;
+    width: 0; /* Starts at 0, animated to 80px via JS */
     height: 4px;
     background-color: var(--primary-red);
     margin: 20px auto 0;
@@ -126,6 +135,25 @@ img {
     transition: var(--transition);
     text-align: center;
     cursor: pointer;
+    position: relative;
+    overflow: hidden; /* For Ripple Effect */
+}
+
+/* Ripple Effect Styles */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple-anim 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple-anim {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
 }
 
 .btn-red {
@@ -161,6 +189,12 @@ img {
     font-weight: 600;
 }
 
+/* Wrapper for Laser Focus Effect */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 .form-group input,
 .form-group textarea,
 .form-group select {
@@ -170,14 +204,36 @@ img {
     border-radius: 4px;
     font-family: inherit;
     transition: var(--transition);
+    background: transparent; /* Needed for visibility */
+    position: relative;
+    z-index: 1;
 }
 
+/* Focus Border (Laser) */
+.focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-red);
+    transition: 0.4s;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+/* When input inside wrapper is focused (handled via JS for better control or :focus-within) */
+.input-wrapper:focus-within .focus-border {
+    width: 100%;
+}
+
+/* Remove default focus outline since we use laser border,
+   but keep a subtle one for accessibility if needed or trust the border */
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
     outline: none;
-    border-color: var(--primary-red);
-    box-shadow: 0 0 0 2px rgba(189, 31, 40, 0.2);
+    border-color: #ddd; /* Keep gray, laser is red */
 }
 
 .form-group textarea {
@@ -349,13 +405,15 @@ header.scrolled {
     margin-bottom: 20px;
     text-transform: uppercase;
     font-weight: 800;
-    animation: fadeInUp 1s ease;
+    /* Initial state handled by Anime.js (opacity 0) */
+    opacity: 1;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 30px;
+    /* AOS animation fallback */
     animation: fadeInUp 1s ease 0.3s both;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
@@ -366,6 +424,20 @@ header.scrolled {
     gap: 20px;
     animation: fadeInUp 1s ease 0.6s both;
 }
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-size: 2rem;
+    color: var(--white);
+    opacity: 0.8;
+}
+
+.scroll-indicator a { color: var(--white); }
 
 /* Service Page Hero */
 .service-hero {
@@ -452,44 +524,73 @@ header.scrolled {
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transition: var(--transition);
-    position: relative; /* Needed for pseudo-element positioning */
+    position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;
-    min-height: 450px; /* Ensure consistent height during animation */
+    min-height: 450px;
+    /* Initial state for Stagger */
+    opacity: 0;
+    transform: translateY(20px);
 }
 
-/* Background image overlay on hover */
-.service-card::before {
+/* New Bg Structure for Zoom Effect */
+.service-card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    /* Dark overlay built-in or added via ::after? Let's use ::after on this div or linear-gradient in HTML style.
+       Actually, the inline style usually overrides.
+       Let's assume the inline style has the URL. We need the gradient too.
+    */
+}
+
+/* Re-apply gradient via pseudo-element on the card or card-bg */
+.service-card-bg::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Use the variable defined in inline styles or fallback to gray */
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), var(--bg-image, none);
-    background-size: cover;
-    background-position: center;
+    background: rgba(0,0,0,0.6); /* Default dark overlay for readability */
     opacity: 0;
     transition: opacity 0.4s ease;
-    z-index: -1; /* Behind the content */
 }
 
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+.service-card:hover .service-card-bg::after {
+    opacity: 0.8; /* Darker on hover? Or just visible?
+       Original design: grayscale header -> full color bg.
+       Current plan: Bg Zoom. We want the image visible.
+       Let's keep it simple: Image is there. Overlay fades in/out.
+    */
+    opacity: 0; /* Let the image shine through on hover */
 }
 
-/* On hover, fade in the background */
-.service-card:hover::before {
-    opacity: 1;
+/* Wait, original design had image hidden initially?
+   "hover effect that transitions from a grayscale header layout to a full-color background"
+   Let's keep the .service-image (icon) visible initially, and the bg hidden or faint.
+*/
+
+.service-card-bg {
+    opacity: 0; /* Hidden initially */
+    transition: opacity 0.4s ease;
+}
+
+.service-card:hover .service-card-bg {
+    opacity: 1; /* Show on hover */
 }
 
 .service-image {
     height: 200px;
     overflow: hidden;
     transition: opacity 0.4s ease, height 0.4s ease;
+    z-index: 2;
 }
 
 .service-image img {
@@ -499,24 +600,17 @@ header.scrolled {
     transition: var(--transition);
 }
 
-/* Hide original image/icon or reduce prominence on hover if desired.
-   Universal Plant style typically replaces content or overlays it.
-   Let's try collapsing the image to make room for full card text/bg focus. */
 .service-card:hover .service-image {
-    /* Optional: Hide the top image to show full background?
-       Or keep it. Universal Plant keeps the icon but background changes.
-       The user said "se pone una imagen" (an image is put).
-       With the ::before covering the whole card, we need to make sure text is readable. */
     opacity: 0;
-    height: 0; /* Collapse it to center text? Or just hide it? */
+    height: 0;
 }
 
 .service-content {
     padding: 20px;
     transition: color 0.3s ease;
     position: relative;
-    z-index: 2; /* Ensure text is above ::before */
-    flex: 1; /* Take remaining space */
+    z-index: 2;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -528,7 +622,6 @@ header.scrolled {
     transition: color 0.3s ease;
 }
 
-/* Change text colors on hover */
 .service-card:hover .service-content h3 {
     color: var(--white);
 }
@@ -537,7 +630,6 @@ header.scrolled {
     color: var(--light-gray);
 }
 
-/* Button changes on hover */
 .service-card:hover .btn-red {
     background-color: var(--white);
     color: var(--primary-black);
@@ -744,7 +836,47 @@ footer {
 .footer-bottom a:hover { color: var(--primary-red); }
 
 /* =========================================
-   9. ANIMATIONS
+   9. PRELOADER
+   ========================================= */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preloader-content {
+    text-align: center;
+}
+
+.preloader-logo {
+    width: 80px;
+    margin-bottom: 20px;
+}
+
+.loading-bar {
+    width: 200px;
+    height: 3px;
+    background-color: #eee;
+    margin: 0 auto;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-red);
+}
+
+/* =========================================
+   10. ANIMATIONS (Fallback / CSS)
    ========================================= */
 @keyframes fadeInUp {
     from {
@@ -758,10 +890,8 @@ footer {
 }
 
 /* =========================================
-   10. RESPONSIVE (Native-Feel Mobile Protocol)
+   11. RESPONSIVE
    ========================================= */
-
-/* Tablet & Smaller Desktop (max-width: 992px) */
 @media (max-width: 992px) {
     .about-content,
     .contact-container,
@@ -787,21 +917,18 @@ footer {
     }
 }
 
-/* Mobile Devices (max-width: 768px) */
 @media (max-width: 768px) {
-    /* --- 1. Typography & Global --- */
     h1 { font-size: 2rem; }
     h2 { font-size: 1.75rem; }
     h3 { font-size: 1.5rem; }
-    p, body { font-size: 16px; } /* Min readable size */
+    p, body { font-size: 16px; }
 
-    .section { padding: 40px 0; } /* Reduced spacing */
+    .section { padding: 40px 0; }
 
-    /* --- 2. Header & Navigation --- */
     .mobile-menu-btn {
         display: block;
         width: 44px;
-        height: 44px; /* Touch target */
+        height: 44px;
         line-height: 44px;
         text-align: center;
     }
@@ -811,8 +938,8 @@ footer {
         top: 80px;
         left: -100%;
         width: 100%;
-        height: calc(100vh - 80px); /* Fallback */
-        height: calc(100dvh - 80px); /* Modern mobile viewport */
+        height: calc(100vh - 80px);
+        height: calc(100dvh - 80px);
         background-color: var(--white);
         flex-direction: column;
         align-items: center;
@@ -820,7 +947,7 @@ footer {
         transition: var(--transition);
         z-index: 999;
         overflow-y: auto;
-        padding: 20px 0 80px; /* Extra bottom padding for scroll */
+        padding: 20px 0 80px;
     }
 
     .nav-menu.active { left: 0; }
@@ -834,13 +961,12 @@ footer {
 
     .nav-menu li a {
         display: block;
-        padding: 15px 0; /* Expanded touch target */
+        padding: 15px 0;
         font-size: 1.1rem;
     }
 
-    .nav-menu li a:after { display: none; } /* Remove hover underline effect on mobile */
+    .nav-menu li a:after { display: none; }
 
-    /* Submenu handling: Always expand on mobile for accessibility */
     .submenu {
         position: static;
         opacity: 1;
@@ -862,13 +988,11 @@ footer {
         color: var(--dark-gray);
     }
 
-    /* Disable hover interactions from desktop */
     .nav-menu li:hover .submenu { display: block; }
 
-    /* --- 3. Hero Section --- */
     .hero {
         height: auto;
-        min-height: 60vh; /* Reduced from 100dvh to avoid empty space on short content */
+        min-height: 60vh;
         padding-top: 100px;
         padding-bottom: 60px;
     }
@@ -887,14 +1011,10 @@ footer {
         padding: 100px 0 60px;
     }
 
-    /* --- 4. Components & Layout --- */
-    img {
-        max-width: 100%;
-        height: auto;
-    }
+    img { max-width: 100%; height: auto; }
 
     .btn {
-        width: 100%; /* Full width buttons */
+        width: 100%;
         min-height: 48px;
         display: flex;
         align-items: center;
@@ -908,235 +1028,28 @@ footer {
     .equipment-grid,
     .benefits-grid,
     .careers-grid {
-        display: grid; /* Keep grid layout */
-        grid-template-columns: 1fr; /* Force single column */
+        display: grid;
+        grid-template-columns: 1fr;
         gap: 30px;
     }
 
-    .service-card {
-        min-height: auto; /* Let content dictate height */
-    }
-
+    .service-card { min-height: auto; }
     .stat-item { padding: 20px; }
-
     .logo-hero-flotante { display: none; }
 }
 
-/* Extra Small (max-width: 480px) */
 @media (max-width: 480px) {
     h1 { font-size: 1.8rem; }
     .hero h1 { font-size: 1.6rem; }
-
     .container { padding: 0 15px; }
-
     .section-title { font-size: 1.5rem; }
-
-    /* Adjust logo size if needed */
     .logo-img { height: 40px; }
     .logo-text { font-size: 1.2rem; }
 }
 
-/* =========================================
-   11. SERVICE SPECIFIC COMPONENTS
-   ========================================= */
-/* Materials Section (Welding) */
-.materials-section {
-    background-color: var(--light-gray);
-    padding: 80px 0;
-}
-
-.materials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.material-card {
-    background: var(--white);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: var(--transition);
-    position: relative;
-    border-top: 4px solid var(--primary-red);
-}
-
-.material-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-}
-
-.material-icon {
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-red);
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-.material-content {
-    padding: 25px;
-    text-align: center;
-}
-
-.material-content h3 {
-    margin-bottom: 15px;
-    color: var(--primary-black);
-}
-
-/* Equipment Section (Welding) */
-.equipment-section {
-    background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('../images/welding-equipment-bg.jpg') center/cover;
-    padding: 80px 0;
-    color: var(--white);
-}
-
-.equipment-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.equipment-card {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(5px);
-    border-radius: 8px;
-    padding: 30px;
-    transition: var(--transition);
-    border-left: 4px solid var(--primary-red);
-}
-
-.equipment-card:hover {
-    background: rgba(189, 31, 40, 0.2);
-    transform: translateY(-5px);
-}
-
-.equipment-card h3 {
-    color: var(--white);
-    margin-bottom: 15px;
-    position: relative;
-    padding-bottom: 10px;
-}
-
-.equipment-card h3:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 2px;
-    background-color: var(--primary-red);
-}
-
-/* Features List (Bolt Tensioning) */
-.feature-list {
-    margin: 30px 0;
-}
-
-.feature-item {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 20px;
-}
-
-.feature-icon {
-    color: var(--primary-red);
-    font-size: 1.5rem;
-    margin-right: 15px;
-    min-width: 25px;
-}
-
-.feature-text h4 {
-    margin-bottom: 5px;
-}
-
-/* Why Choose / Benefits (Bolt Tensioning) */
-.why-choose {
-    padding: 80px 0;
-    background-color: var(--light-gray);
-}
-
-.benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.benefit-item {
-    background-color: var(--white);
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    transition: var(--transition);
-}
-
-.benefit-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.benefit-item h4 {
-    color: var(--primary-red);
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
-
-.benefit-item h4 i {
-    margin-right: 10px;
-}
-
-/* =========================================
-   12. HOME SPECIFIC (Floating Logo, Map, Tabs, Careers)
-   ========================================= */
-
-/* Floating Logo */
+/* Floating Logo (Idea 4/Custom) */
 .logo-hero-flotante {
     position: absolute; right: 5%; top: 20%; width: min(20vw, 150px); z-index: 2;
-    animation: rebote-flotante 4s ease-in-out infinite;
+    /* Handled by JS parallax now, but keep animation if JS fails?
+       No, JS will override. */
 }
-
-@keyframes rebote-flotante {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-}
-
-@media (max-width: 768px) {
-    .logo-hero-flotante { display: none; }
-}
-
-/* About Tabs */
-.about-tabs { margin: 20px 0; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
-.tabs-header { display: flex; background: #f5f5f5; }
-.tab-link { padding: 15px 20px; border: none; background: none; cursor: pointer; flex: 1; font-weight: 600; font-family: inherit; }
-.tab-link.active { background: white; color: var(--primary-red); border-bottom: 3px solid var(--primary-red); }
-.tab-content { display: none; padding: 25px; }
-.tab-content.active { display: block; }
-
-/* Careers Section */
-.careers-section { background-color: var(--light-gray); padding: 100px 0; position: relative; overflow: hidden; }
-.careers-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--primary-red), var(--primary-black)); }
-.careers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 50px 0; }
-.careers-card { background: var(--white); padding: 30px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: var(--transition); text-align: center; border-top: 3px solid var(--primary-red); }
-.careers-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-.careers-icon { font-size: 2.5rem; color: var(--primary-red); margin-bottom: 20px; }
-.careers-cta { background: var(--primary-black); padding: 40px; border-radius: 8px; text-align: center; margin-top: 50px; position: relative; overflow: hidden; }
-.careers-cta::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; background: var(--primary-red); }
-.cta-content h3 { color: var(--white); margin-bottom: 15px; }
-.cta-content p { color: var(--primary-gray); margin-bottom: 25px; }
-
-/* Google Map */
-.google-map-wrapper {
-    margin-top: 30px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border: 4px solid white;
-    height: 300px;
-}
-.google-map-wrapper iframe { display: block; width: 100%; height: 100%; }
