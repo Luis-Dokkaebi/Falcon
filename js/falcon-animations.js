@@ -232,9 +232,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 9. STATS COUNTERS (Idea 16)
+    // 9. STATS COUNTERS (Idea 16 & Idea 10 - Center Trigger)
     const statsSection = document.querySelector('.stats');
     if (statsSection) {
+        // Idea 10: Center Trigger for Mobile
+        const isMobileStats = window.innerWidth < 768;
+        const statsRootMargin = isMobileStats ? '-40% 0px -40% 0px' : '0px';
+
         const statsObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -304,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     statsObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.5, rootMargin: statsRootMargin });
         statsObserver.observe(statsSection);
     }
 
@@ -336,13 +340,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 11. SUBMIT BUTTON TAKEOFF (Idea 20)
+    // 11. SUBMIT BUTTON TAKEOFF (Idea 20) & FORM SHAKE (Idea 9)
     const submitBtn = document.getElementById('submitBtn');
     if (submitBtn) {
         submitBtn.addEventListener('click', (e) => {
             e.preventDefault(); // Prevent actual form submit for demo
 
-            // Animation
+            // Idea 9: Form Validation Shake
+            // Simple validation: check if inputs are empty
+            const form = submitBtn.closest('.contact-form');
+            const inputs = form.querySelectorAll('input, textarea');
+            let isValid = true;
+            let invalidElements = [];
+
+            inputs.forEach(input => {
+                if (input.value.trim() === '') {
+                    isValid = false;
+                    invalidElements.push(input.parentElement); // Shake the wrapper
+                }
+            });
+
+            if (!isValid) {
+                // Shake Animation
+                anime({
+                    targets: invalidElements,
+                    translateX: [0, -10, 10, -10, 10, 0],
+                    duration: 600,
+                    easing: 'easeInOutSine'
+                });
+                return; // Stop execution
+            }
+
+            // Animation (Takeoff) if valid
             anime({
                 targets: submitBtn,
                 scale: [1, 0.1],
@@ -354,7 +383,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 complete: () => {
                     // Reset or show success message
                     submitBtn.style.display = 'none';
-                    const form = submitBtn.closest('.contact-form');
                     const successMsg = document.createElement('div');
                     successMsg.innerHTML = '<h3 style="color: var(--primary-red); text-align: center;">Message Sent!</h3>';
                     form.appendChild(successMsg);
@@ -366,6 +394,68 @@ document.addEventListener('DOMContentLoaded', () => {
                         duration: 600
                     });
                 }
+            });
+        });
+    }
+
+    // 12. BACK TO TOP BUTTON (Idea 8)
+    const backToTopBtn = document.getElementById('backToTop');
+    if (backToTopBtn) {
+        // Show/Hide on scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Click Logic - Rocket Launch
+        backToTopBtn.addEventListener('click', () => {
+            // Animate Scroll to Top
+            anime({
+                targets: 'html, body',
+                scrollTop: 0,
+                duration: 1000,
+                easing: 'easeInOutCubic'
+            });
+
+            // Animate Button Launch
+            anime({
+                targets: backToTopBtn,
+                translateY: -1000,
+                opacity: 0,
+                duration: 1000,
+                easing: 'easeInExpo',
+                complete: () => {
+                    // Reset Button State
+                    backToTopBtn.classList.remove('visible');
+                    anime.set(backToTopBtn, {
+                        translateY: 0,
+                        opacity: 0 // Will be handled by class toggle but safe to reset
+                    });
+                }
+            });
+        });
+    }
+
+    // 13. SERVICE CARD TOUCH ANIMATION (Idea 4) - Mobile Only
+    // Use matchMedia to check if mobile? Or apply to all touch events.
+    // The request said "exclusive for smartphone view", but usually safe for all.
+    // Let's filter by width to be precise to the request.
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+    if (isMobile) {
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Quick scale pulse
+                anime({
+                    targets: card,
+                    scale: [1, 0.95, 1],
+                    duration: 200,
+                    easing: 'easeInOutQuad'
+                });
             });
         });
     }
