@@ -1,3 +1,8 @@
+/**
+ * Falcon Plant Resources - Animation Logic
+ * Powered by Anime.js
+ * Implements 10+ interactive animations for enhanced UX.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     // 1. PRELOADER (Idea 9)
     // Pulse the logo
