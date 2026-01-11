@@ -4,6 +4,9 @@
  * Implements 10+ interactive animations for enhanced UX.
  */
 document.addEventListener('DOMContentLoaded', () => {
+    // Helper for mobile detection
+    const getIsMobile = () => window.matchMedia("(max-width: 768px)").matches;
+
     // 1. PRELOADER (Idea 9)
     // Pulse the logo
     anime({
@@ -49,13 +52,24 @@ document.addEventListener('DOMContentLoaded', () => {
         // Idea 1 (Typewriter) was NOT in the user's specific selection list "5,8,9,11,12,13,14,15,16,19,20",
         // so I will skip Typewriter to respect the explicit choice, but ensure the title appears.
 
-        anime({
-            targets: '.hero h1, .hero-company h1, .service-hero h1, .service-hero-content h1',
-            opacity: [0, 1],
-            translateY: [20, 0],
-            duration: 1000,
-            easing: 'easeOutCubic'
-        });
+        if (getIsMobile()) {
+            // Simple fade for mobile
+            anime({
+                targets: '.hero h1, .hero-company h1, .service-hero h1, .service-hero-content h1',
+                opacity: [0, 1],
+                translateY: [10, 0],
+                duration: 800,
+                easing: 'easeOutQuad'
+            });
+        } else {
+            anime({
+                targets: '.hero h1, .hero-company h1, .service-hero h1, .service-hero-content h1',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 1000,
+                easing: 'easeOutCubic'
+            });
+        }
 
         // 3. SCROLL INDICATOR (Idea 5)
         anime({
@@ -126,24 +140,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const gridObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Reset initial state for animation
-                    anime.set('.service-card', {
-                        opacity: 0,
-                        translateY: 50,
-                        scale: 0.8,
-                        rotateX: 10
-                    });
+                    if (getIsMobile()) {
+                        // Simplified Mobile Animation
+                        anime.set('.service-card', {
+                            opacity: 0,
+                            translateY: 20
+                        });
 
-                    anime({
-                        targets: '.service-card',
-                        opacity: [0, 1],
-                        translateY: [50, 0],
-                        scale: [0.8, 1],
-                        rotateX: [10, 0],
-                        delay: anime.stagger(200),
-                        duration: 1200,
-                        easing: 'easeOutElastic(1, .6)' // Nice bounce
-                    });
+                        anime({
+                            targets: '.service-card',
+                            opacity: [0, 1],
+                            translateY: [20, 0],
+                            delay: anime.stagger(100),
+                            duration: 800,
+                            easing: 'easeOutQuad'
+                        });
+                    } else {
+                        // Desktop - Full 3D Elastic Effect
+                        anime.set('.service-card', {
+                            opacity: 0,
+                            translateY: 50,
+                            scale: 0.8,
+                            rotateX: 10
+                        });
+
+                        anime({
+                            targets: '.service-card',
+                            opacity: [0, 1],
+                            translateY: [50, 0],
+                            scale: [0.8, 1],
+                            rotateX: [10, 0],
+                            delay: anime.stagger(200),
+                            duration: 1200,
+                            easing: 'easeOutElastic(1, .6)' // Nice bounce
+                        });
+                    }
                     gridObserver.unobserve(entry.target);
                 }
             });
@@ -277,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const statsSection = document.querySelector('.stats');
     if (statsSection) {
         // Idea 10: Center Trigger for Mobile
-        const isMobileStats = window.innerWidth < 768;
+        const isMobileStats = getIsMobile();
         const statsRootMargin = isMobileStats ? '-40% 0px -40% 0px' : '0px';
 
         const statsObserver = new IntersectionObserver((entries) => {
@@ -484,9 +515,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Use matchMedia to check if mobile? Or apply to all touch events.
     // The request said "exclusive for smartphone view", but usually safe for all.
     // Let's filter by width to be precise to the request.
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-    if (isMobile) {
+    if (getIsMobile()) {
         const serviceCards = document.querySelectorAll('.service-card');
         serviceCards.forEach(card => {
             card.addEventListener('click', () => {
@@ -507,32 +537,44 @@ document.addEventListener('DOMContentLoaded', () => {
         const certsObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Stagger Entrance
-                    anime({
-                        targets: '.anime-cert',
-                        opacity: [0, 1],
-                        translateY: [50, 0],
-                        scale: [0.8, 1],
-                        rotate: {
-                            value: [-5, 0], // Slight rotation for effect
-                            duration: 1000
-                        },
-                        delay: anime.stagger(200),
-                        duration: 1200,
-                        easing: 'easeOutElastic(1, .8)',
-                        complete: function() {
-                             // Continuous Floating Effect after entrance
-                             anime({
-                                targets: '.anime-cert img',
-                                translateY: [-5, 5],
-                                direction: 'alternate',
-                                loop: true,
-                                duration: 2000,
-                                easing: 'easeInOutSine',
-                                delay: anime.stagger(300) // Stagger the float too
-                             });
-                        }
-                    });
+                    if (getIsMobile()) {
+                        // Simple Mobile Entrance, No Floating Loop
+                        anime({
+                            targets: '.anime-cert',
+                            opacity: [0, 1],
+                            translateY: [20, 0],
+                            delay: anime.stagger(100),
+                            duration: 800,
+                            easing: 'easeOutQuad'
+                        });
+                    } else {
+                        // Desktop Entrance with Rotate & Elastic
+                        anime({
+                            targets: '.anime-cert',
+                            opacity: [0, 1],
+                            translateY: [50, 0],
+                            scale: [0.8, 1],
+                            rotate: {
+                                value: [-5, 0], // Slight rotation for effect
+                                duration: 1000
+                            },
+                            delay: anime.stagger(200),
+                            duration: 1200,
+                            easing: 'easeOutElastic(1, .8)',
+                            complete: function() {
+                                 // Continuous Floating Effect after entrance
+                                 anime({
+                                    targets: '.anime-cert img',
+                                    translateY: [-5, 5],
+                                    direction: 'alternate',
+                                    loop: true,
+                                    duration: 2000,
+                                    easing: 'easeInOutSine',
+                                    delay: anime.stagger(300) // Stagger the float too
+                                 });
+                            }
+                        });
+                    }
                     certsObserver.unobserve(entry.target);
                 }
             });
