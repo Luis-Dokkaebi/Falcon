@@ -110,6 +110,16 @@ document.addEventListener('DOMContentLoaded', () => {
             duration: 800,
             easing: 'easeInOutSine'
         });
+
+    // Floating Falcon Animation
+    const falcon = document.querySelector('.logo-hero-flotante');
+    if (falcon && !getIsMobile()) {
+        window.addEventListener('scroll', () => {
+             const scrollY = window.scrollY;
+             // Rotate slightly based on scroll and scale up
+             falcon.style.transform = `rotate(${scrollY * 0.05}deg) scale(${1 + scrollY * 0.0002})`;
+        });
+    }
     }
 
     // 4. RIPPLE EFFECT (Idea 8)

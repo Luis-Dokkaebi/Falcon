@@ -1043,9 +1043,7 @@ footer {
 
 /* Floating Logo (Idea 4/Custom) */
 .logo-hero-flotante {
-    position: absolute; right: 5%; top: 20%; width: min(20vw, 150px); z-index: 2;
-    /* Handled by JS parallax now, but keep animation if JS fails?
-       No, JS will override. */
+    position: fixed; right: 5%; top: 20%; width: min(20vw, 150px); z-index: 900;
 }
 
 /* =========================================
