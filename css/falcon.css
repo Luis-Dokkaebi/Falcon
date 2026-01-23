@@ -1089,7 +1089,7 @@ footer {
         align-items: flex-end; /* Align menu to bottom of logo */
     }
 
-    .hero, .service-hero {
+    .hero, .service-hero, .hero-company {
         padding-top: 200px; /* Increase padding to clear tall header */
     }
 }
