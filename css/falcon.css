@@ -2146,7 +2146,7 @@ footer {
 }
 
 .fpr-welding-hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(139, 0, 0, 0.7)),
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
                 url('../images/welding_specialty_new.jpg') no-repeat center center/cover;
     height: 100vh;
     min-height: 650px;
@@ -2673,5 +2673,196 @@ footer {
 
     .service-detail-image {
         order: -1;
+    }
+}
+
+/* =========================================
+   Safety Page Styles
+   ========================================= */
+.safety-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+    perspective: 1000px; /* Enable 3D space */
+}
+
+.safety-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    border-top: 5px solid var(--primary-red);
+    padding: 30px;
+
+    /* Animation Initial State handled by JS, but if fallback needed: */
+    opacity: 0;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+
+.safety-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.safety-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.safety-icon {
+    font-size: 3rem;
+    color: var(--primary-red);
+    margin-bottom: 20px;
+    text-align: center;
+    display: block;
+}
+
+.safety-card h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary-black);
+}
+
+.safety-card p {
+    color: var(--dark-gray);
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.safety-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.safety-list li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    color: var(--dark-gray);
+}
+
+.safety-list li:before {
+    content: "\f00c"; /* FontAwesome check */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: var(--primary-red);
+    font-size: 0.9rem;
+}
+
+/* Adjust grid for mobile */
+@media (max-width: 768px) {
+    .safety-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .safety-card {
+        min-height: auto;
+    }
+}
+
+/* =========================================
+   Quality Page Styles
+   ========================================= */
+.quality-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+    perspective: 1000px;
+}
+
+.quality-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    border-top: 5px solid var(--primary-red);
+    padding: 30px;
+
+    /* Animation Initial State */
+    opacity: 0;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+
+.quality-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.quality-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.quality-icon {
+    font-size: 3rem;
+    color: var(--primary-red);
+    margin-bottom: 20px;
+    text-align: center;
+    display: block;
+}
+
+.quality-card h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary-black);
+}
+
+.quality-card p {
+    color: var(--dark-gray);
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.quality-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.quality-list li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    color: var(--dark-gray);
+}
+
+.quality-list li:before {
+    content: "\f00c"; /* FontAwesome check */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: var(--primary-red);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .quality-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quality-card {
+        min-height: auto;
     }
 }
