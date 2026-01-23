@@ -1082,3 +1082,14 @@ footer {
     background-color: var(--primary-black);
     transform: translateY(-5px);
 }
+
+/* Adjustments for Large Logo (Desktop) */
+@media (min-width: 992px) {
+    .header-container {
+        align-items: flex-end; /* Align menu to bottom of logo */
+    }
+
+    .hero, .service-hero {
+        padding-top: 200px; /* Increase padding to clear tall header */
+    }
+}
