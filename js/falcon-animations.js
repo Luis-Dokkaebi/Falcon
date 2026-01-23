@@ -175,20 +175,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 6. SERVICE CARDS STAGGER - Top Tier Animation
-    const servicesGrid = document.querySelector('.services-grid');
+    const servicesGrid = document.querySelector('.services-grid, .safety-grid');
     if (servicesGrid) {
         const gridObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     if (getIsMobile()) {
                         // Simplified Mobile Animation
-                        anime.set('.service-card', {
+                        anime.set('.service-card, .safety-card', {
                             opacity: 0,
                             translateY: 20
                         });
 
                         anime({
-                            targets: '.service-card',
+                            targets: '.service-card, .safety-card',
                             opacity: [0, 1],
                             translateY: [20, 0],
                             delay: anime.stagger(100),
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     } else {
                         // Desktop - Full 3D Elastic Effect
-                        anime.set('.service-card', {
+                        anime.set('.service-card, .safety-card', {
                             opacity: 0,
                             translateY: 50,
                             scale: 0.8,
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
 
                         anime({
-                            targets: '.service-card',
+                            targets: '.service-card, .safety-card',
                             opacity: [0, 1],
                             translateY: [50, 0],
                             scale: [0.8, 1],
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 7. SERVICE CARD HOVER - 3D TILT & LEVITATION (Top of the Top)
-    document.querySelectorAll('.service-card').forEach(card => {
+    document.querySelectorAll('.service-card, .safety-card').forEach(card => {
         const bg = card.querySelector('.service-card-bg');
 
         // Disable native transition for smoother anime.js control during interaction
@@ -557,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Let's filter by width to be precise to the request.
 
     if (getIsMobile()) {
-        const serviceCards = document.querySelectorAll('.service-card');
+        const serviceCards = document.querySelectorAll('.service-card, .safety-card');
         serviceCards.forEach(card => {
             card.addEventListener('click', () => {
                 // Quick scale pulse
