@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     certsObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.2 });
+        }, { threshold: 0.01 });
 
         certsObserver.observe(certsContainer);
     }
