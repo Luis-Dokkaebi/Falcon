@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper for mobile detection
     const getIsMobile = () => window.matchMedia("(max-width: 768px)").matches;
 
+    // Zero-out Hero Image initially to prevent FOUC/Glitch before animation
+    const heroImgInitial = document.querySelector('.service-hero-image');
+    if (heroImgInitial) {
+        heroImgInitial.style.opacity = '0';
+    }
+
     // 1. PRELOADER (Idea 9)
     // Pulse the logo
     anime({
@@ -69,6 +75,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 duration: 1000,
                 easing: 'easeOutCubic'
             });
+        }
+
+        // Animate Service Hero Image (Certificate)
+        const heroImg = document.querySelector('.service-hero-image');
+        if (heroImg) {
+            if (getIsMobile()) {
+                anime({
+                    targets: heroImg,
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    duration: 800,
+                    easing: 'easeOutQuad',
+                    delay: 200
+                });
+            } else {
+                anime({
+                    targets: heroImg,
+                    opacity: [0, 1],
+                    translateX: [50, 0], // slide from right
+                    duration: 1000,
+                    easing: 'easeOutCubic',
+                    delay: 600
+                });
+            }
         }
 
         // 3. SCROLL INDICATOR (Idea 5)
@@ -578,7 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     certsObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.2 });
+        }, { threshold: 0.01 });
 
         certsObserver.observe(certsContainer);
     }
