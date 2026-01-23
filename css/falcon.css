@@ -2491,6 +2491,78 @@ footer {
     }
 }
 
+/* FPR Expert Welding Section */
+.fpr-expert-section {
+    padding: 80px 0;
+    background-color: var(--white);
+}
+
+.fpr-expert-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--primary-black);
+    margin-bottom: 20px;
+    position: relative;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.fpr-expert-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-red);
+    margin: 15px auto 0;
+}
+
+.fpr-expert-subtitle {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 50px;
+    color: var(--dark-gray);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.fpr-expert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.fpr-expert-text {
+    text-align: left;
+}
+
+.fpr-expert-intro {
+    font-weight: 700;
+    color: var(--primary-black);
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.fpr-expert-desc {
+    color: var(--dark-gray);
+    line-height: 1.6;
+}
+
+.fpr-expert-image-wrapper img {
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    display: block; /* Removes bottom space */
+}
+
+@media (max-width: 992px) {
+    .fpr-expert-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
 /* =========================================
    Torque & Bolt Tensioning Page Styles
    ========================================= */
