@@ -114,10 +114,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Floating Falcon Animation
     const falcon = document.querySelector('.logo-hero-flotante');
     if (falcon && !getIsMobile()) {
+        // Idle Animation (Bounce)
+        const bounceAnim = anime({
+            targets: falcon,
+            translateY: [-10, 10], // Gentle bounce
+            direction: 'alternate',
+            loop: true,
+            duration: 2000,
+            easing: 'easeInOutSine',
+            autoplay: true
+        });
+
+        let scrollTimeout;
         window.addEventListener('scroll', () => {
-             const scrollY = window.scrollY;
-             // Rotate slightly based on scroll and scale up
-             falcon.style.transform = `rotate(${scrollY * 0.05}deg) scale(${1 + scrollY * 0.0002})`;
+             // Pause animation while scrolling to "accompany" rigidly
+             bounceAnim.pause();
+
+             // Resume bounce when scroll stops
+             clearTimeout(scrollTimeout);
+             scrollTimeout = setTimeout(() => {
+                 bounceAnim.play();
+             }, 150);
         });
     }
     }
