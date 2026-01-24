@@ -1044,7 +1044,7 @@ footer {
 
 /* Floating Logo (Idea 4/Custom) */
 .logo-hero-flotante {
-    position: fixed; right: 5%; top: 20%; width: min(20vw, 150px); z-index: 900;
+    position: fixed; right: 5%; top: 20%; width: min(35vw, 280px); z-index: 900;
 }
 
 /* =========================================
