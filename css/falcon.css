@@ -279,6 +279,11 @@ header.scrolled {
     max-height: 90px;
     max-width: 50vw; /* Prevent logo from crowding navigation on smaller screens */
     transition: var(--transition);
+    /* White contour for visibility on dark backgrounds */
+    filter: drop-shadow(1px 1px 0 white)
+            drop-shadow(-1px -1px 0 white)
+            drop-shadow(1px -1px 0 white)
+            drop-shadow(-1px 1px 0 white);
 }
 
 /* Logo text styles removed as we now use a full image logo */
