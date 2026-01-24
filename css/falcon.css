@@ -882,6 +882,11 @@ footer {
     }
 }
 
+/* Floating Logo (Idea 4/Custom) */
+.logo-hero-flotante {
+    position: fixed; right: 5%; top: 20%; width: min(35vw, 280px); z-index: 900;
+}
+
 /* =========================================
    11. RESPONSIVE
    ========================================= */
@@ -1028,7 +1033,13 @@ footer {
 
     .service-card { min-height: auto; }
     .stat-item { padding: 20px; }
-    .logo-hero-flotante { display: none; }
+    /* .logo-hero-flotante { display: none; } Removed to show on mobile */
+    .logo-hero-flotante {
+        display: block;
+        width: 100px;
+        right: 10px;
+        top: 15%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1042,10 +1053,6 @@ footer {
     }
 }
 
-/* Floating Logo (Idea 4/Custom) */
-.logo-hero-flotante {
-    position: fixed; right: 5%; top: 20%; width: min(35vw, 280px); z-index: 900;
-}
 
 /* =========================================
    12. BACK TO TOP BUTTON (Idea 8)
