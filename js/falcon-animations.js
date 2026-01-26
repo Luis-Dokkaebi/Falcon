@@ -639,4 +639,117 @@ document.addEventListener('DOMContentLoaded', () => {
 
         certsObserver.observe(certsContainer);
     }
+
+    // 15. SPECIALTY WELDING ANIMATIONS
+    function initWeldingAnimations() {
+        const weldingHero = document.querySelector('.fpr-welding-hero');
+        if (!weldingHero) return;
+
+        // Hero Animation
+        const heroTimeline = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 1000
+        });
+
+        if (getIsMobile()) {
+            // Mobile Hero
+            heroTimeline
+                .add({
+                    targets: '.fpr-anime-hero-title',
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    delay: 200
+                })
+                .add({
+                    targets: '.fpr-anime-hero-desc',
+                    opacity: [0, 1],
+                    translateY: [20, 0]
+                }, '-=800')
+                .add({
+                    targets: '.fpr-anime-hero-cta',
+                    opacity: [0, 1],
+                    scale: [0.9, 1]
+                }, '-=800');
+        } else {
+            // Desktop Hero
+            heroTimeline
+                .add({
+                    targets: '.fpr-anime-hero-title',
+                    opacity: [0, 1],
+                    translateY: [-50, 0],
+                    delay: 500
+                })
+                .add({
+                    targets: '.fpr-anime-hero-desc',
+                    opacity: [0, 1],
+                    translateY: [50, 0]
+                }, '-=800')
+                .add({
+                    targets: '.fpr-anime-hero-cta',
+                    opacity: [0, 1],
+                    scale: [0.5, 1]
+                }, '-=600');
+        }
+
+        // Observer for Sections
+        const weldingObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+
+                    // Expert Section
+                    if (target.classList.contains('fpr-expert-section')) {
+                         anime({
+                             targets: target.querySelectorAll('.fpr-anime-fade-left'),
+                             opacity: [0, 1],
+                             translateX: getIsMobile() ? [0, 0] : [-50, 0],
+                             duration: 1000,
+                             easing: 'easeOutCubic'
+                         });
+                         anime({
+                             targets: target.querySelectorAll('.fpr-anime-fade-right'),
+                             opacity: [0, 1],
+                             translateX: getIsMobile() ? [0, 0] : [50, 0],
+                             delay: 200,
+                             duration: 1000,
+                             easing: 'easeOutCubic'
+                         });
+                    }
+
+                    // Capabilities (Cards)
+                    if (target.classList.contains('fpr-welding-capabilities')) {
+                        anime({
+                            targets: target.querySelectorAll('.fpr-anime-card'),
+                            opacity: [0, 1],
+                            translateY: [50, 0],
+                            scale: getIsMobile() ? [1, 1] : [0.9, 1],
+                            delay: anime.stagger(200),
+                            duration: 1200,
+                            easing: 'easeOutElastic(1, .8)'
+                        });
+                    }
+
+                    // Advantages (List)
+                    if (target.classList.contains('fpr-welding-advantages')) {
+                        anime({
+                            targets: target.querySelectorAll('.fpr-anime-slide-right'),
+                            opacity: [0, 1],
+                            translateX: [-30, 0],
+                            delay: anime.stagger(150),
+                            duration: 800,
+                            easing: 'easeOutQuad'
+                        });
+                    }
+
+                    weldingObserver.unobserve(target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        // Observe sections
+        const sectionsToObserve = document.querySelectorAll('.fpr-expert-section, .fpr-welding-capabilities, .fpr-welding-advantages');
+        sectionsToObserve.forEach(section => weldingObserver.observe(section));
+    }
+
+    initWeldingAnimations();
 });
