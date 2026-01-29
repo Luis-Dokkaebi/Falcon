@@ -1170,8 +1170,9 @@ footer {
 }
 
 .service-hero-image {
-    flex: 0 0 350px;
-    max-width: 350px;
+    flex: 0 1 500px;
+    max-width: 500px;
+    width: 100%;
 }
 
 .hero-cert-img {
