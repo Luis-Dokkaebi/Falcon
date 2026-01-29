@@ -1182,6 +1182,40 @@ footer {
     border: 4px solid var(--white);
 }
 
+/* Hero Stamps */
+.hero-description {
+    margin-bottom: 15px;
+}
+
+.hero-services-list {
+    font-weight: 600;
+}
+
+.hero-stamps-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.hero-stamp-img {
+    height: 80px;
+    width: auto;
+    filter: invert(1);
+    mix-blend-mode: screen;
+    transition: transform 0.3s ease;
+}
+
+.hero-stamp-img:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .hero-stamps-container {
+        justify-content: center;
+    }
+}
+
 /* Materials & Equipment */
 .materials-section {
     background-color: var(--light-gray);
