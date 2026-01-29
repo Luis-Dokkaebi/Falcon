@@ -1201,8 +1201,6 @@ footer {
 .hero-stamp-img {
     height: 80px;
     width: auto;
-    filter: invert(1);
-    mix-blend-mode: screen;
     transition: transform 0.3s ease;
 }
 
