@@ -594,10 +594,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const certsObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    const certs = entry.target.querySelectorAll('.anime-cert');
                     if (getIsMobile()) {
                         // Simple Mobile Entrance, No Floating Loop
                         anime({
-                            targets: '.anime-cert',
+                            targets: certs,
                             opacity: [0, 1],
                             translateY: [20, 0],
                             delay: anime.stagger(100),
@@ -607,7 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         // Desktop Entrance with Rotate & Elastic
                         anime({
-                            targets: '.anime-cert',
+                            targets: certs,
                             opacity: [0, 1],
                             translateY: [50, 0],
                             scale: [0.8, 1],
@@ -620,15 +621,22 @@ document.addEventListener('DOMContentLoaded', () => {
                             easing: 'easeOutElastic(1, .8)',
                             complete: function() {
                                  // Continuous Floating Effect after entrance
-                                 anime({
-                                    targets: '.anime-cert img',
-                                    translateY: [-5, 5],
-                                    direction: 'alternate',
-                                    loop: true,
-                                    duration: 2000,
-                                    easing: 'easeInOutSine',
-                                    delay: anime.stagger(300) // Stagger the float too
+                                 const imgs = [];
+                                 certs.forEach(c => {
+                                     const img = c.querySelector('img');
+                                     if(img) imgs.push(img);
                                  });
+                                 if (imgs.length > 0) {
+                                     anime({
+                                        targets: imgs,
+                                        translateY: [-5, 5],
+                                        direction: 'alternate',
+                                        loop: true,
+                                        duration: 2000,
+                                        easing: 'easeInOutSine',
+                                        delay: anime.stagger(300) // Stagger the float too
+                                     });
+                                 }
                             }
                         });
                     }
