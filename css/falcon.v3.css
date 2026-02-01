@@ -2875,14 +2875,17 @@ footer {
    Safety Page Styles
    ========================================= */
 .safety-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 30px;
     margin-top: 50px;
     perspective: 1000px; /* Enable 3D space */
 }
 
 .safety-card {
+    flex: 1 1 300px;
+    max-width: 600px;
     background-color: var(--white);
     border-radius: 8px;
     overflow: hidden;
@@ -2971,14 +2974,17 @@ footer {
    Quality Page Styles
    ========================================= */
 .quality-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 30px;
     margin-top: 50px;
     perspective: 1000px;
 }
 
 .quality-card {
+    flex: 1 1 300px;
+    max-width: 600px;
     background-color: var(--white);
     border-radius: 8px;
     overflow: hidden;
