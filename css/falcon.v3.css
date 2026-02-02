@@ -570,6 +570,12 @@ header.scrolled {
     */
 }
 
+.bg-contain {
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-color: var(--primary-black); /* Fill gaps */
+}
+
 /* Re-apply gradient via pseudo-element on the card or card-bg */
 .service-card-bg::after {
     content: '';
