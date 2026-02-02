@@ -3158,3 +3158,8 @@ footer {
 .safety-hero-bg {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/safety_hero_new.jpg') no-repeat center center/cover;
 }
+
+/* Fabrication Detail Image: Black and White Filter */
+#fab-detail-image img {
+    filter: grayscale(100%);
+}
