@@ -1697,6 +1697,14 @@ footer {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/torque.png') no-repeat center center/cover;
 }
 
+@media (max-width: 768px) {
+    .controlled-services-hero {
+        background-size: cover, contain;
+        background-repeat: no-repeat, no-repeat;
+        background-position: center, center;
+    }
+}
+
 .services-grid-enhanced {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
