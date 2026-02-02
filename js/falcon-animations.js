@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 targets: card,
                 rotateX: rotateX,
                 rotateY: rotateY,
-                scale: 1.05,
+                scale: 1.02,
                 boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
                 duration: 100, // Very fast for responsiveness
                 easing: 'linear'
