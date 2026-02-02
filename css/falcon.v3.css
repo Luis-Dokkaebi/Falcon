@@ -570,6 +570,25 @@ header.scrolled {
     */
 }
 
+.bg-contain {
+    background-size: cover !important; /* Ensure bg is full for the blur effect */
+    background-position: center !important;
+    position: relative; /* Context for pseudo */
+}
+
+.bg-contain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: inherit; /* Inherit the URL from the parent inline style */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 0;
+}
+
 /* Re-apply gradient via pseudo-element on the card or card-bg */
 .service-card-bg::after {
     content: '';
