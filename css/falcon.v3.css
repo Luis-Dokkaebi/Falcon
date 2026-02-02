@@ -2119,7 +2119,7 @@ footer {
    Mechanical Services Page Styles
    ========================================= */
 .mechanical-hero-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('../images/final_mechanical.jpg') no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)), url('../images/final_mechanical.jpg') no-repeat center center/cover;
 }
 
 /* =========================================
