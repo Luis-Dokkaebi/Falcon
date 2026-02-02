@@ -3127,3 +3127,20 @@ footer {
         min-height: auto;
     }
 }
+
+/* =========================================
+   Custom Overrides
+   ========================================= */
+/* Fabrication Card Specifics: Grayscale Default, Color on Hover */
+#fab-service-card .service-image img {
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+#fab-service-card:hover .service-image img {
+    filter: grayscale(0%);
+}
+
+#fab-service-card .service-card-bg {
+    filter: none;
+}
