@@ -583,6 +583,11 @@ header.scrolled {
     transition: opacity 0.4s ease;
 }
 
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
 .service-card:hover .service-card-bg::after {
     opacity: 0.7; /* Dark overlay to make white text pop against the image */
 }
@@ -692,7 +697,7 @@ header.scrolled {
 }
 
 .equipment-item:hover {
-    /* transform: translateY(-5px); - Handled by Anime.js */
+    transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -1291,7 +1296,7 @@ footer {
 }
 
 .material-card:hover {
-    /* transform: translateY(-10px); */
+    transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
@@ -1447,7 +1452,7 @@ footer {
 }
 
 .certified-service-item:hover {
-    /* transform: translateY(-5px); */
+    transform: translateY(-5px);
 }
 
 .service-icon {
@@ -1752,7 +1757,7 @@ footer {
 }
 
 .service-card-enhanced:hover {
-    /* transform: translateY(-10px); */
+    transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
@@ -2457,7 +2462,7 @@ footer {
 }
 
 .fpr-welding-card:hover {
-    /* transform: translateY(-10px); */
+    transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
 
@@ -2868,7 +2873,7 @@ footer {
 }
 
 .benefit-item:hover {
-    /* transform: translateY(-5px); */
+    transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
@@ -2910,7 +2915,7 @@ footer {
 }
 
 .material-card:hover {
-    /* transform: translateY(-10px); */
+    transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
 
