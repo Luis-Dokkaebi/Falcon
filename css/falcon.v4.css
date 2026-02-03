@@ -549,7 +549,7 @@ header.scrolled {
     flex-direction: column;
     min-height: 450px;
     /* Initial state for Stagger */
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d; /* Preserve 3D for children if needed */
     will-change: transform, opacity; /* Optimize for animation */
 }
@@ -686,7 +686,7 @@ header.scrolled {
     border-radius: 8px;
     border-left: 4px solid var(--primary-red);
     transition: var(--transition);
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
@@ -718,7 +718,7 @@ header.scrolled {
 
 .stat-item {
     padding: 30px;
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
@@ -1136,7 +1136,7 @@ footer {
     align-items: center;
     font-size: 1.2rem;
     transition: var(--transition);
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     visibility: hidden;
     transform: translateY(20px);
 }
@@ -1285,7 +1285,7 @@ footer {
     transition: var(--transition);
     position: relative;
     border-top: 4px solid var(--primary-red);
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
@@ -1399,7 +1399,7 @@ footer {
     flex: 0 0 250px;
     max-width: 100%; /* Safety for small screens */
     text-align: center;
-    opacity: 0; /* Hidden initially for animation */
+    /* opacity: 0; Hidden initially for animation - Removed */
 }
 
 .cert-wrapper img {
@@ -1441,7 +1441,7 @@ footer {
     text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     transition: transform 0.3s ease;
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
@@ -1746,7 +1746,7 @@ footer {
     display: flex;
     flex-direction: column;
     border-top: 4px solid var(--primary-red);
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
@@ -2451,7 +2451,7 @@ footer {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     padding: 30px;
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
@@ -2862,7 +2862,7 @@ footer {
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transition: var(--transition);
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
@@ -2904,7 +2904,7 @@ footer {
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     text-align: center;
     transition: var(--transition);
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
@@ -2963,7 +2963,7 @@ footer {
     padding: 30px;
 
     /* Animation Initial State handled by JS, but if fallback needed: */
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
@@ -3059,7 +3059,7 @@ footer {
     padding: 30px;
 
     /* Animation Initial State */
-    opacity: 0;
+    /* opacity: 0; Removed to prevent invisible content if JS fails */
     transform-style: preserve-3d;
     will-change: transform, opacity;
 }
