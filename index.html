@@ -368,6 +368,16 @@
             mobileMenuBtn.innerHTML = navMenu.classList.contains('active') ? 
                 '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
         });
+
+        // Close menu when clicking internal links
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
         
         // Header Scroll Effect
         const header = document.getElementById('header');
